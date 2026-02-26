@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clean RAG (Flask + Ollama)</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body>
+    <h1>Clean RAG (Flask + Ollama)</h1>
+    <p>This app: Upload → Ingest → Ask → Answer with citations.</p>
+
+    <!-- Ingest card -->
+    <div class="card">
+        <h2>1) Ingest Document</h2>
+
+        <label for="file">Upload PDF or TXT</label>
+        <input id="file" type="file" accept=".pdf,.txt" />
+
+        <button id="ingestBtn">Ingest</button>
+
+        <p><strong>Status:</strong></p>
+        <div id="status" class="status mono">No file ingested yet.</div>
+    </div>
+
+    <!-- Ask card -->
+    <div class="card">
+        <h2>2) Ask Question</h2>
+
+        <label for="question">Question</label>
+        <input id="question" type="text" placeholder="Ask something from the document..." />
+
+        <div class="row">
+            <div>
+                <label for="topk">Top-k</label>
+                <input id="topk" type="number" min="1" max="10" value="5" />
+            </div>
+            <div>
+                <label for="model">Ollama model</label>
+                <input id="model" type="text" value="gpt-oss:20b" />
+            </div>
+        </div>
+
+        <button id="askBtn">Ask</button>
+
+        <label for="answer">Answer</label>
+        <textarea id="answer" readonly></textarea>
+
+        <label for="citations">Citations</label>
+        <textarea id="citations" class="mono" readonly></textarea>
+    </div>
+
+    <script src="../static/js/main.js"></script>
+</body>
+
+</html>

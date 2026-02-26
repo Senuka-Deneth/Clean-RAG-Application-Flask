@@ -1,0 +1,90 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 24px;
+    max-width: 90%;
+    width: 100%;
+    background-color: #e9ecef;
+    font-family: 'Cochin';
+    margin: auto;
+}
+
+p,
+label {
+    font-size: 20px;
+}
+
+h1 {
+    margin-bottom: 8px;
+    text-align: center;
+    font-family: 'Big Caslon';
+    color: #495057;
+    font-size: 40px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 16px 0;
+    background-color: #dee2e6;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+textarea {
+    min-height: 120px;
+}
+
+button {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.row {
+    display: flex;
+    gap: 12px;
+}
+
+.row>div {
+    flex: 1;
+}
+
+.status {
+    white-space: pre-wrap;
+}
+
+.mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+#askBtn,
+#ingestBtn,
+#file {
+    font-family: 'Cochin';
+}
