@@ -1,90 +1,293 @@
+:root {
+    --bg-color: #FAF9F6;
+    /* soft off‑white background */
+    --card-bg: #FFFFFF;
+    /* white card */
+    --border-color: #E5E5E5;
+    /* light grey border */
+    --accent-bg: #F0F1F4;
+    /* light grey for pills and bubbles */
+    --primary: #5865F2;
+    /* blue accent similar to Perplexity */
+    --text-color: #333333;
+}
+
+/* Global resets */
 body {
-    font-family: Arial, sans-serif;
-    margin: 24px;
-    max-width: 90%;
+    margin: 0;
+    font-family: "Inter", Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    /* fallback font as in original */
+    font-family: cochin;
+}
+
+/* Wrapper to center content */
+.page-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem;
+}
+
+/* When results are shown, align card to the top */
+.page-wrapper.result-mode {
+    align-items: flex-start;
+}
+
+/* Main card */
+.main-card {
     width: 100%;
-    background-color: #e9ecef;
-    font-family: 'Cochin';
-    margin: auto;
+    max-width: 800px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    /* removed margin-top: auto; for proper centering */
 }
 
-p,
-label {
-    font-size: 20px;
+/* When results are shown, push card near the top */
+.main-card.result-mode {
+    margin-top: 24px;
 }
 
-h1 {
-    margin-bottom: 8px;
+/* Chat mode: float card at bottom like a chat window */
+.main-card.chat-mode {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 2rem);
+    max-width: 800px;
+    margin: 0;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading */
+.main-card h1 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 3rem;
     text-align: center;
-    font-family: 'Big Caslon';
-    color: #495057;
-    font-size: 40px;
 }
 
-h2 {
-    font-size: 30px;
+/* Query bar */
+.query-bar {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border-color);
+    background-color: var(--accent-bg);
+    border-radius: 999px;
+    padding: 0.5rem 1rem;
 }
 
-.card {
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 16px;
-    margin: 16px 0;
-    background-color: #dee2e6;
-}
-
-label {
-    display: block;
-    margin-top: 10px;
-}
-
-input[type="text"],
-input[type="number"],
-textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 6px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
-
-textarea {
-    min-height: 120px;
-}
-
-button {
-    margin-top: 12px;
-    padding: 10px 14px;
-    border: none;
-    border-radius: 8px;
+/* Icon button (file upload) */
+.icon-btn {
+    color: var(--primary);
+    font-size: 1.1rem;
+    margin-right: 0.75rem;
     cursor: pointer;
 }
 
-button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.row {
-    display: flex;
-    gap: 12px;
-}
-
-.row>div {
+/* Question input */
+.question-input {
     flex: 1;
+    padding-left: 10px;
+    border: none;
+    background: transparent;
+    font-size: 0.8rem;
+    outline: none;
 }
 
+/* Pill‑style selectors */
+.pill-select,
+.pill-input {
+    margin-left: 0.5rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background-color: #fff;
+    font-size: 0.9rem;
+    min-width: 70px;
+}
+
+/* Ask button */
+.ask-btn {
+    margin-left: 0.5rem;
+    background-color: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.ask-btn:hover {
+    background-color: #4755c6;
+}
+
+/* Status */
 .status {
-    white-space: pre-wrap;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #666;
 }
 
-.mono {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+/* Answer container */
+.answer-container {
+    margin-top: 2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background-color: var(--accent-bg);
+    padding: 1rem;
+}
+.hidden {
+    display: none;
 }
 
-#askBtn,
-#ingestBtn,
-#file {
-    font-family: 'Cochin';
+/* Question bubble */
+.question-bubble {
+    align-self: stretch;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
 }
+
+.question-bubble.full {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Answer text */
+.answer-text p {
+    margin: 0.5rem 0;
+    line-height: 1.5;
+}
+
+/* Citation tags */
+.citations span {
+    display: inline-block;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 2px 4px;
+    margin-right: 4px;
+    font-size: 0.75rem;
+    color: var(--primary);
+    cursor: pointer;
+}
+
+/* Perplexity-style file upload pill button */
+.upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border-color);
+    background: #fff;
+    color: #111;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.upload-btn:hover {
+    background: rgba(0, 0, 0, 0.03);
+    border-color: rgba(0, 0, 0, 0.18);
+}
+
+.upload-btn:active {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+/* Keyboard focus ring */
+.upload-btn:focus,
+.upload-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.20);
+    border-color: rgba(88, 101, 242, 0.55);
+}
+
+.upload-ico {
+    font-size: 16px;
+    line-height: 1;
+    opacity: 0.85;
+}
+
+.upload-text {
+    color: #111;
+}
+
+/* Send icon */
+.send-ico {
+    width: 18px;
+    height: 18px;
+    fill: #fff;
+    display: block;
+}
+
+/* Selected filename text (subtle, like Perplexity) */
+.file-name {
+    margin-left: 10px;
+    font-size: 0.85rem;
+    color: rgba(0, 0, 0, 0.55);
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@media (max-width: 520px) {
+    .file-name {
+        display: none;
+    }
+}
+
+/* Result bubbles (Answer + Citations) */
+.answer-bubble,
+.citations-bubble {
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 0.9rem 1rem;
+    margin-bottom: 1rem;
+}
+
+.bubble-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.65);
+    margin-bottom: 8px;
+}
+
+/* Citations list inside the citations bubble */
+.citations {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.citations span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
