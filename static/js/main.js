@@ -339,7 +339,8 @@ if (askBtn) {
 
       appendAIMessage(data);
     } catch (err) {
-      appendAIMessage(null, 'Error: ' + (err?.message || err));
+      console.error(err);
+      appendAIMessage(null, 'An error occurred while processing your request. Please try again.');
     }
   });
 }

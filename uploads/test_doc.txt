@@ -1,1 +1,0 @@
-This is a test document for verifying the RAG pipeline. The sky is blue and the grass is green. Clean Architecture is a software design philosophy that separates the elements of a design into ring levels.
