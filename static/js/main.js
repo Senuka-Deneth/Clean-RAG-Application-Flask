@@ -343,3 +343,66 @@ if (askBtn) {
     }
   });
 }
+
+// ----------------------------------------------------
+// Final Polish: Welcome Messages & Drag and Drop
+// ----------------------------------------------------
+
+// Dynamic Welcome Message
+const welcomeMessages = [
+    "What can I do for you?",
+    "How can I assist you today?",
+    "What would you like to explore?",
+    "Ready to discover something new?",
+    "How can I help you learn today?",
+    "What answers are you seeking?",
+    "Let's dive into your documents.",
+    "What's on your mind today?",
+    "How can I streamline your work?",
+    "Ask me anything you'd like!"
+];
+const welcomeHeading = document.querySelector('.welcome-heading');
+if(welcomeHeading) {
+    const randomMsg = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
+    welcomeHeading.textContent = randomMsg;
+}
+
+// Drag and Drop Logic
+const glassInputWrapper = document.querySelector('.glass-input-wrapper');
+if (glassInputWrapper && fileInput) {
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        document.body.addEventListener(eventName, preventDefaults, false);
+        glassInputWrapper.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        glassInputWrapper.addEventListener(eventName, () => {
+            glassInputWrapper.classList.add('drag-highlight');
+        }, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        glassInputWrapper.addEventListener(eventName, () => {
+            glassInputWrapper.classList.remove('drag-highlight');
+        }, false);
+    });
+
+    glassInputWrapper.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files && files.length > 0) {
+            fileInput.files = files;
+            __ragIngested = false;
+            clearError();
+            
+            // Dispatch change event to trigger placeholder logic in index.html
+            const event = new Event('change');
+            fileInput.dispatchEvent(event);
+        }
+    }, false);
+}
