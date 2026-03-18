@@ -468,6 +468,11 @@ body.light-theme .answer-bubble {
 .citations-scroll-area {
     padding: 20px; overflow-y: auto; display: flex;
     flex-direction: column; gap: 12px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.citations-scroll-area::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
 }
 
 .citation-item {
@@ -597,4 +602,12 @@ body.light-theme .answer-bubble {
 
 .answer-bubble.status-msg {
     min-width: 190px;
+}
+
+/* Drag and Drop Visual Feedback */
+.drag-highlight {
+    outline: 2px dashed var(--text-secondary);
+    border-radius: 24px;
+    background: var(--glass-border) !important;
+    transition: all 0.2s ease;
 }
