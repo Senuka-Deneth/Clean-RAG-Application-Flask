@@ -194,6 +194,11 @@ body {
   outline: none;
   padding: 8px 8px;
   font-family: inherit;
+  resize: none;
+  min-height: 40px;
+  max-height: 200px;
+  overflow-y: auto;
+  line-height: 1.5;
 }
 
 .glass-input::placeholder {
@@ -342,6 +347,9 @@ body.light-theme .model-select:hover {
   color: var(--text-primary);
   max-width: 80%;
   font-size: 16px;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-wrap;
 }
 
 .answer-bubble {
@@ -353,6 +361,9 @@ body.light-theme .model-select:hover {
   max-width: 95%;
   font-size: 16px;
   line-height: 1.7;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-wrap;
 }
 
 /* Ensure Light Theme bubbles have shadow to distinguish */
