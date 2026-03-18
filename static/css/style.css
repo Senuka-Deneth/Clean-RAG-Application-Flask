@@ -403,27 +403,76 @@ body.light-theme .answer-bubble {
     background: var(--btn-hover);
 }
 
-.citations-list {
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    margin-bottom: 12px;
+/* Citations Expansion Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.visible {
+    opacity: 1; visibility: visible;
+}
+
+.citations-modal-content {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-top: 1px solid var(--glass-border-light);
-    border-radius: 16px;
-    padding: 16px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    width: 400px;
-    max-width: 90vw;
-    max-height: 400px;
-    overflow-y: auto;
-    box-shadow: var(--glass-shadow);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    z-index: 500;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    transform: scale(0.95) translateY(10px);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-overlay.visible .citations-modal-content {
+    transform: scale(1) translateY(0);
+}
+
+.citations-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: none;
+}
+
+.modal-title {
+    font-size: 15px; font-weight: 600; color: var(--text-primary);
+}
+
+.close-modal-btn {
+    background: none; border: none; color: var(--text-secondary);
+    cursor: pointer; border-radius: 50%; display: flex;
+    justify-content: center; align-items: center; padding: 8px;
+    margin-left: -8px; transition: all 0.2s ease;
+}
+
+.close-modal-btn:hover {
+    background: var(--btn-hover); color: var(--text-primary);
+}
+
+.citations-scroll-area {
+    padding: 20px; overflow-y: auto; display: flex;
+    flex-direction: column; gap: 12px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+.citations-scroll-area::-webkit-scrollbar {
+    display: none; /* Chrome, Safari and Opera */
 }
 
 .citation-item {
@@ -510,4 +559,55 @@ body.light-theme .answer-bubble {
    margin-top: 8px;
    font-weight: 500;
    text-align: center;
+}
+
+.top-left-actions {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 100;
+}
+
+.pill-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  width: auto;
+  border-radius: 20px;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.pill-btn:hover {
+  background: var(--btn-hover) !important;
+}
+
+/* Scrollbar matching for dark/light themes */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(150, 150, 150, 0.3);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(150, 150, 150, 0.5);
+}
+
+.answer-bubble.status-msg {
+    min-width: 190px;
+}
+
+/* Drag and Drop Visual Feedback */
+.drag-highlight {
+    outline: 2px dashed var(--text-secondary);
+    border-radius: 24px;
+    background: var(--glass-border) !important;
+    transition: all 0.2s ease;
 }
