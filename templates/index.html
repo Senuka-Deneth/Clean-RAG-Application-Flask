@@ -1,69 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Retrieve Information</title>
+    <title>Manus Liquid Glass UI</title>
     <link rel="stylesheet" href="../static/css/style.css" />
 </head>
 
 <body class="page-wrapper">
-  <!-- Main container -->
-  <div id="main-card" class="main-card">
-    <h1>Retriever</h1>
+  
+  <!-- Script to prevent flash of unstyled theme -->
+  <script>
+    (function() {
+      var theme = localStorage.getItem('preferred-theme') || 'system';
+      var isDark = theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if(isDark) document.body.classList.add('dark-theme');
+      else document.body.classList.add('light-theme');
+    })();
+  </script>
 
-    <!-- Query bar -->
-    <div class="query-bar">
-      <input id="file" type="file" accept=".pdf,.txt" hidden />
+  <!-- Upper Left New Chat Button -->
+  <div class="top-left-actions">
+    <button id="newChatBtn" class="pill-btn" title="New Chat" style="background: var(--glass-bg); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow);">
+       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+       <span style="font-size: 13px; font-weight: 500; font-family: inherit;">New Chat</span>
+    </button>
+  </div>
 
-      <label for="file" class="upload-btn" title="Upload document">
-        <span class="upload-ico" aria-hidden="true">+</span>
-      </label>
-
-      <!-- Question input -->
-      <input id="question" type="text" placeholder="Ask something from the document..." class="question-input" />
-
-      <!-- Top‑k selector -->
-      <select id="topk" class="pill-select">
-        <option value="1">Top‑1</option>
-        <option value="3">Top‑3</option>
-        <option value="5" selected>Top‑5</option>
-        <option value="10">Top‑10</option>
-      </select>
-
-      <!-- Model input -->
-      <input id="model" type="text" value="gpt-oss:20b" class="pill-input" />
-
-      <!-- Ask button -->
-      <button id="askBtn" class="ask-btn" title="Send">
-        <svg class="send-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+  <!-- Upper Right Theme Dropdown -->
+  <div class="top-bar">
+    <div class="theme-dropdown-container">
+      <button id="themeToggleBtn" class="circle-btn theme-toggle-btn" title="Theme Settings">
+        <svg class="theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M12 3v18a9 9 0 0 0 0-18z"></path>
         </svg>
       </button>
-    </div>
-
-    <!-- Status / Progress -->
-    <div id="status" class="status">No file ingested yet.</div>
-
-    <!-- Result area (hidden by default) -->
-    <div id="answer-container" class="answer-container hidden">
-      <div class="question-bubble full" id="question-display"></div>
-
-      <div class="answer-bubble" aria-label="Answer">
-        <div class="bubble-title">Answer</div>
-        <div id="answer" class="answer-text"></div>
-      </div>
-
-      <div class="citations-bubble" aria-label="Citations">
-        <div class="bubble-title">Citations</div>
-        <div id="citations" class="citations"></div>
+      <div id="themeDropdownMenu" class="theme-dropdown-menu menu-hidden">
+        <button class="theme-option" data-theme="system">System</button>
+        <button class="theme-option" data-theme="light">Light</button>
+        <button class="theme-option" data-theme="dark">Dark</button>
       </div>
     </div>
   </div>
 
-  <!-- Script -->
-  <script src="../static/js/main.js"></script>
-</body>
+  <div id="main-card" class="main-card">
+    
+    <!-- Welcome Heading (Initial Stage Only) -->
+    <h1 class="welcome-heading">What can I do for you?</h1>
 
+    <!-- Result area (hidden by default) -->
+    <div id="answer-container" class="answer-container hidden">
+      <!-- dynamically populated log -->
+    </div>
+
+    <!-- The Liquid Glass Input Area -->
+    <div class="glass-input-wrapper">
+      <div class="glass-input-container">
+        <!-- Text Input -->
+        <textarea id="question" rows="1" placeholder="Upload a file" class="glass-input"></textarea>
+        
+        <!-- Action Buttons -->
+        <div class="glass-actions">
+          <div class="actions-left">
+             <!-- Plus button for file upload -->
+             <input id="file" type="file" accept=".pdf,.txt" hidden />
+             <label for="file" class="circle-btn" title="Upload document">
+               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+             </label>
+             
+             <!-- Custom Liquid Glass Model Dropdown -->
+             <div class="model-dropdown-container">
+               <button id="modelToggleBtn" class="model-select">
+                 <span id="selectedModelText">gpt-oss:20b</span>
+               </button>
+               <div id="modelDropdownMenu" class="theme-dropdown-menu menu-hidden model-menu">
+                 <button class="theme-option model-option" data-model="gpt-oss:20b">gpt-oss:20b</button>
+                 <button class="theme-option model-option" data-model="qwen2.5-coder:14b">qwen2.5-coder:14b</button>
+               </div>
+               <input type="hidden" id="model" value="gpt-oss:20b" />
+             </div>
+
+             <!-- Hidden Top-k for backend -->
+             <input type="hidden" id="topk" value="5" />
+          </div>
+
+          <div class="actions-right">
+             <!-- Send Button (Up Arrow) -->
+             <button id="askBtn" class="circle-btn send-btn" title="Send">
+               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+             </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Legacy Status Message Removed (Handled in Output Bubbles now) -->
+    </div>
+  </div>
+
+  <script src="../static/js/main.js"></script>
+  
+  <!-- Inline logic for dynamic UI updates (leaving main.js essentially untouched structurally) -->
+  <script>
+    // 1. Dynamic placeholder based on file upload & Auto-resize
+    const fileInputMod = document.getElementById('file');
+    const questionInputMod = document.getElementById('question');
+    if (fileInputMod && questionInputMod) {
+      fileInputMod.addEventListener('change', (e) => {
+        const hasFile = e.target.files && e.target.files.length > 0;
+        questionInputMod.placeholder = hasFile ? "Ask a question about the document..." : "Upload a file";
+      });
+      
+      // Auto-resize logic
+      questionInputMod.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+      });
+      
+      // Submit on Enter (Shift+Enter for new line)
+      questionInputMod.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            document.getElementById('askBtn').click();
+        }
+      });
+    }
+
+    // 2. Theme Toggle Dropdown Logic
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const themeDropdownMenu = document.getElementById('themeDropdownMenu');
+    const themeOptions = document.querySelectorAll('.theme-option:not(.model-option)');
+
+    themeToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        themeDropdownMenu.classList.toggle('menu-hidden');
+    });
+
+    function applyTheme(theme) {
+        document.body.classList.remove('light-theme', 'dark-theme');
+        if (theme === 'system') {
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.body.classList.add(prefersDark ? 'dark-theme' : 'light-theme');
+        } else {
+            document.body.classList.add(`${theme}-theme`);
+        }
+        localStorage.setItem('preferred-theme', theme);
+    }
+
+    function updateDropdownActiveState(selectedTheme) {
+        themeOptions.forEach(btn => {
+            if(btn.getAttribute('data-theme') === selectedTheme) {
+                btn.style.fontWeight = '600';
+                btn.style.color = 'var(--text-primary)';
+            } else {
+                btn.style.fontWeight = 'normal';
+                btn.style.color = 'var(--text-secondary)';
+            }
+        });
+    }
+
+    const savedTheme = localStorage.getItem('preferred-theme') || 'system';
+    updateDropdownActiveState(savedTheme);
+
+    themeOptions.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const theme = e.target.getAttribute('data-theme');
+            applyTheme(theme);
+            updateDropdownActiveState(theme);
+        });
+    });
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (localStorage.getItem('preferred-theme') === 'system') {
+            document.body.classList.remove('light-theme', 'dark-theme');
+            document.body.classList.add(e.matches ? 'dark-theme' : 'light-theme');
+        }
+    });
+
+    // 3. Model Select Dropdown Logic
+    const modelToggleBtn = document.getElementById('modelToggleBtn');
+    const modelDropdownMenu = document.getElementById('modelDropdownMenu');
+    const modelOptions = document.querySelectorAll('.model-option');
+    const modelHiddenInput = document.getElementById('model');
+    const selectedModelText = document.getElementById('selectedModelText');
+
+    modelToggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        modelDropdownMenu.classList.toggle('menu-hidden');
+    });
+
+    modelOptions.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const val = e.target.getAttribute('data-model');
+            modelHiddenInput.value = val;
+            selectedModelText.textContent = val;
+        });
+    });
+
+    document.addEventListener('click', () => {
+        themeDropdownMenu.classList.add('menu-hidden');
+        if(modelDropdownMenu) modelDropdownMenu.classList.add('menu-hidden');
+    });
+  </script>
+</body>
 </html>

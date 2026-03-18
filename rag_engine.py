@@ -31,7 +31,7 @@ def chunk_text(text : str, chunk_size=800, overlap=150):
     return chunks
 
 #Embed the chunks (convert text to numerical vectors)
-def embed_texts(texts, model="nomic-embed-text:latest"):
+def embed_texts(texts, model="nomic-embed-text-v2-moe:latest"):
     url = "http://localhost:11434/api/embeddings"
     vecs = []
     for t in texts:
