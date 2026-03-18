@@ -5,64 +5,81 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Retrieve Information</title>
+    <!-- Import Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/style.css" />
 </head>
 
 <body class="page-wrapper">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="app-name">Retriever</div>
+    <div class="app-status">RAG · ACTIVE</div>
+  </div>
+
   <!-- Main container -->
   <div id="main-card" class="main-card">
-    <h1>Retriever</h1>
-
-    <!-- Query bar -->
-    <div class="query-bar">
-      <input id="file" type="file" accept=".pdf,.txt" hidden />
-
-      <label for="file" class="upload-btn" title="Upload document">
-        <span class="upload-ico" aria-hidden="true">+</span>
-      </label>
-
-      <!-- Question input -->
-      <input id="question" type="text" placeholder="Ask something from the document..." class="question-input" />
-
-      <!-- Top‑k selector -->
-      <select id="topk" class="pill-select">
-        <option value="1">Top‑1</option>
-        <option value="3">Top‑3</option>
-        <option value="5" selected>Top‑5</option>
-        <option value="10">Top‑10</option>
-      </select>
-
-      <!-- Model input -->
-      <input id="model" type="text" value="gpt-oss:20b" class="pill-input" />
-
-      <!-- Ask button -->
-      <button id="askBtn" class="ask-btn" title="Send">
-        <svg class="send-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-          <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
-        </svg>
-      </button>
+    
+    <!-- File upload section -->
+    <div class="file-upload-wrap">
+       <input id="file" type="file" accept=".pdf,.txt" hidden />
+       <label for="file" class="upload-btn" title="Upload document">
+         DROP FILE OR CLICK TO UPLOAD
+       </label>
+       <div id="status" class="status">No file ingested yet.</div>
     </div>
-
-    <!-- Status / Progress -->
-    <div id="status" class="status">No file ingested yet.</div>
 
     <!-- Result area (hidden by default) -->
     <div id="answer-container" class="answer-container hidden">
-      <div class="question-bubble full" id="question-display"></div>
-
-      <div class="answer-bubble" aria-label="Answer">
-        <div class="bubble-title">Answer</div>
-        <div id="answer" class="answer-text"></div>
+      
+      <!-- User Message -->
+      <div class="message-group user-group">
+        <div class="message-label">You</div>
+        <div class="question-bubble full" id="question-display"></div>
       </div>
 
-      <div class="citations-bubble" aria-label="Citations">
-        <div class="bubble-title">Citations</div>
-        <div id="citations" class="citations"></div>
+      <!-- AI Message -->
+      <div class="message-group ai-group">
+        <div class="message-label">Assistant</div>
+        <div class="answer-bubble" aria-label="Answer">
+          <div id="answer" class="answer-text"></div>
+        </div>
+        
+        <div class="citations-bubble" aria-label="Citations">
+          <div class="bubble-title">Citations</div>
+          <div id="citations" class="citations"></div>
+        </div>
       </div>
+
     </div>
   </div>
 
-  <!-- Script -->
+  <!-- Space for fixed bar -->
+  <div class="bottom-spacer"></div>
+
+  <!-- Bottom Input area -->
+  <div class="bottom-input-bar">
+    <div class="input-container">
+        <!-- Advanced Settings -->
+        <div class="advanced-settings">
+          <select id="topk" class="pill-select">
+            <option value="1">Top‑1</option>
+            <option value="3">Top‑3</option>
+            <option value="5" selected>Top‑5</option>
+            <option value="10">Top‑10</option>
+          </select>
+          <input id="model" type="text" value="gpt-oss:20b" class="pill-input" />
+        </div>
+
+        <div class="input-row">
+          <input id="question" type="text" placeholder="Ask something from the document..." class="question-input" />
+          <button id="askBtn" class="ask-btn" title="Send">Send &rarr;</button>
+        </div>
+    </div>
+  </div>
+
   <script src="../static/js/main.js"></script>
 </body>
 

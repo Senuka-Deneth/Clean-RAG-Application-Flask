@@ -1,293 +1,318 @@
 :root {
-    --bg-color: #FAF9F6;
-    /* soft off‑white background */
-    --card-bg: #FFFFFF;
-    /* white card */
-    --border-color: #E5E5E5;
-    /* light grey border */
-    --accent-bg: #F0F1F4;
-    /* light grey for pills and bubbles */
-    --primary: #5865F2;
-    /* blue accent similar to Perplexity */
-    --text-color: #333333;
+  --bg-color: #F5F4F0;
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B6B6B;
+  --border-color: #D9D7D1;
+  --accent: #2D2D2D;
+  --user-bubble: #EDECE8;
+  --ai-bubble: #FFFFFF;
 }
 
-/* Global resets */
+* {
+  box-sizing: border-box;
+}
+
 body {
-    margin: 0;
-    font-family: "Inter", Arial, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    /* fallback font as in original */
-    font-family: cochin;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-size: 15px;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Wrapper to center content */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
+  margin-top: 0;
+}
+
+/* Top bar */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+}
+
+.app-name {
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.app-status {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* Main Layout */
 .page-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* When results are shown, align card to the top */
-.page-wrapper.result-mode {
-    align-items: flex-start;
-}
-
-/* Main card */
 .main-card {
-    width: 100%;
-    max-width: 800px;
-    background-color: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    padding: 2rem;
-    /* removed margin-top: auto; for proper centering */
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
-/* When results are shown, push card near the top */
-.main-card.result-mode {
-    margin-top: 24px;
+.bottom-spacer {
+  height: 120px; /* space for the fixed input area */
 }
 
-/* Chat mode: float card at bottom like a chat window */
-.main-card.chat-mode {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 2rem);
-    max-width: 800px;
-    margin: 0;
-    border-radius: 12px 12px 0 0;
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1);
+/* File Upload element */
+.file-upload-wrap {
+  text-align: center;
+  margin-bottom: 32px;
 }
 
-/* Heading */
-.main-card h1 {
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    font-size: 3rem;
-    text-align: center;
-}
-
-/* Query bar */
-.query-bar {
-    display: flex;
-    align-items: center;
-    border: 1px solid var(--border-color);
-    background-color: var(--accent-bg);
-    border-radius: 999px;
-    padding: 0.5rem 1rem;
-}
-
-/* Icon button (file upload) */
-.icon-btn {
-    color: var(--primary);
-    font-size: 1.1rem;
-    margin-right: 0.75rem;
-    cursor: pointer;
-}
-
-/* Question input */
-.question-input {
-    flex: 1;
-    padding-left: 10px;
-    border: none;
-    background: transparent;
-    font-size: 0.8rem;
-    outline: none;
-}
-
-/* Pill‑style selectors */
-.pill-select,
-.pill-input {
-    margin-left: 0.5rem;
-    padding: 0.3rem 0.6rem;
-    border-radius: 20px;
-    border: 1px solid var(--border-color);
-    background-color: #fff;
-    font-size: 0.9rem;
-    min-width: 70px;
-}
-
-/* Ask button */
-.ask-btn {
-    margin-left: 0.5rem;
-    background-color: var(--primary);
-    color: #fff;
-    border: none;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-.ask-btn:hover {
-    background-color: #4755c6;
-}
-
-/* Status */
-.status {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    color: #666;
-}
-
-/* Answer container */
-.answer-container {
-    margin-top: 2rem;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    background-color: var(--accent-bg);
-    padding: 1rem;
-}
-.hidden {
-    display: none;
-}
-
-/* Question bubble */
-.question-bubble {
-    align-self: stretch;
-    background-color: #fff;
-    border: 1px solid var(--border-color);
-    border-radius: 18px;
-    padding: 0.75rem 1rem;
-    margin-bottom: 1rem;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-.question-bubble.full {
-    width: 100%;
-    max-width: 100%;
-}
-
-/* Answer text */
-.answer-text p {
-    margin: 0.5rem 0;
-    line-height: 1.5;
-}
-
-/* Citation tags */
-.citations span {
-    display: inline-block;
-    background-color: #fff;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    padding: 2px 4px;
-    margin-right: 4px;
-    font-size: 0.75rem;
-    color: var(--primary);
-    cursor: pointer;
-}
-
-/* Perplexity-style file upload pill button */
 .upload-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    height: 34px;
-    padding: 0 12px;
-    border-radius: 999px;
-    border: 1px solid var(--border-color);
-    background: #fff;
-    color: #111;
-    font-size: 0.9rem;
-    font-weight: 600;
-    line-height: 1;
-    cursor: pointer;
-    user-select: none;
-    white-space: nowrap;
-    transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 80px;
+  border: 1px dashed var(--border-color);
+  background-color: transparent;
+  color: var(--text-secondary);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .upload-btn:hover {
-    background: rgba(0, 0, 0, 0.03);
-    border-color: rgba(0, 0, 0, 0.18);
+  border-color: var(--text-primary);
+  color: var(--text-primary);
 }
 
-.upload-btn:active {
-    background: rgba(0, 0, 0, 0.06);
+/* Status / Dots */
+.status {
+  margin-top: 16px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  display: inline-block;
+  position: relative;
 }
 
-/* Keyboard focus ring */
-.upload-btn:focus,
-.upload-btn:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.20);
-    border-color: rgba(88, 101, 242, 0.55);
+.status:not(:empty) {
+  animation: pulseStatus 2s infinite ease-in-out;
 }
 
-.upload-ico {
-    font-size: 16px;
-    line-height: 1;
-    opacity: 0.85;
+@keyframes pulseStatus {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
 }
 
-.upload-text {
-    color: #111;
+/* Answer Container */
+.answer-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
-/* Send icon */
-.send-ico {
-    width: 18px;
-    height: 18px;
-    fill: #fff;
-    display: block;
+.hidden {
+  display: none !important;
 }
 
-/* Selected filename text (subtle, like Perplexity) */
-.file-name {
-    margin-left: 10px;
-    font-size: 0.85rem;
-    color: rgba(0, 0, 0, 0.55);
-    max-width: 220px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.answer-container:not(.hidden) {
+  animation: fadeIn 0.3s ease forwards;
 }
 
-@media (max-width: 520px) {
-    .file-name {
-        display: none;
-    }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* Result bubbles (Answer + Citations) */
-.answer-bubble,
+/* Messages */
+.message-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.message-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+}
+
+.user-group {
+  align-items: flex-end;
+}
+
+.user-group .message-label {
+  text-align: right;
+  padding-right: 4px;
+}
+
+.ai-group {
+  align-items: flex-start;
+}
+
+.ai-group .message-label {
+  text-align: left;
+  padding-left: 4px;
+}
+
+.question-bubble {
+  background-color: var(--user-bubble);
+  border-radius: 12px 12px 2px 12px;
+  padding: 12px 16px;
+  color: var(--text-primary);
+  max-width: 85%;
+  border: none;
+}
+
+.answer-bubble {
+  background-color: var(--ai-bubble);
+  border: 1px solid var(--border-color);
+  border-radius: 2px 12px 12px 12px;
+  padding: 12px 16px;
+  color: var(--text-primary);
+  max-width: 95%;
+}
+
+.answer-text p:first-child { margin-top: 0; }
+.answer-text p:last-child { margin-bottom: 0; }
+
 .citations-bubble {
-    background: #fff;
-    border: 1px solid var(--border-color);
-    border-radius: 18px;
-    padding: 0.9rem 1rem;
-    margin-bottom: 1rem;
+  margin-top: 8px;
+  background: transparent;
+  padding: 0;
+  border: none;
 }
 
-.bubble-title {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: rgba(0, 0, 0, 0.65);
-    margin-bottom: 8px;
+.citations-bubble .bubble-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
 }
 
-/* Citations list inside the citations bubble */
 .citations {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .citations span {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    width: 100%;
-    box-sizing: border-box;
+  display: inline-block;
+  background-color: var(--ai-bubble);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 11px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.citations span:hover {
+  border-color: var(--text-primary);
+  color: var(--text-primary);
+}
+
+/* Input Bar */
+.bottom-input-bar {
+  background: var(--bg-color);
+  border-top: 1px solid var(--border-color);
+  padding: 16px 24px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: border-color 0.2s ease;
+}
+
+/* Border color changes softly on focus anywhere within the input bar */
+.bottom-input-bar:focus-within {
+  border-top-color: var(--text-primary);
+}
+
+.input-container {
+  max-width: 720px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.advanced-settings {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+}
+
+.pill-select, .pill-input {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.pill-select:focus, .pill-input:focus {
+  outline: none;
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.question-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  color: var(--text-primary);
+  font-family: inherit;
+  padding: 8px 0;
+}
+
+.question-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.ask-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  padding: 8px 0;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.ask-btn:hover {
+  opacity: 0.6;
+}
