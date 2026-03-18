@@ -1,25 +1,28 @@
 /* Base variables scoped to themes */
 body.dark-theme {
-  --bg-color: #242424; 
-  --glass-bg: rgba(60, 60, 60, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+  --bg-color: #1a1a1c; 
+  --glass-bg: rgba(45, 45, 45, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-border-light: rgba(255, 255, 255, 0.25);
+  --glass-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   --text-primary: #f5f5f7;
   --text-secondary: #86868b;
   --bubble-user: rgba(255, 255, 255, 0.08);
   --bubble-ai: rgba(255, 255, 255, 0.03);
   --btn-bg: rgba(255, 255, 255, 0.05);
-  --btn-border: rgba(255, 255, 255, 0.08);
+  --btn-border: rgba(255, 255, 255, 0.1);
   --btn-hover: rgba(255, 255, 255, 0.12);
   --send-btn-bg: rgba(255, 255, 255, 0.15);
   --send-btn-hover: rgba(255, 255, 255, 0.25);
+  --send-btn-text: #fff;
 }
 
 body.light-theme {
   --bg-color: #f5f5f7; 
   --glass-bg: rgba(255, 255, 255, 0.65);
-  --glass-border: rgba(0, 0, 0, 0.1);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.6);
+  --glass-border-light: rgba(255, 255, 255, 0.9);
+  --glass-shadow: 0 16px 40px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
   --text-primary: #1d1d1f;
   --text-secondary: #86868b;
   --bubble-user: rgba(0, 0, 0, 0.04);
@@ -27,25 +30,9 @@ body.light-theme {
   --btn-bg: rgba(0, 0, 0, 0.03);
   --btn-border: rgba(0, 0, 0, 0.08);
   --btn-hover: rgba(0, 0, 0, 0.08);
-  --send-btn-bg: rgba(0, 0, 0, 0.85);
-  --send-btn-hover: #000000;
-}
-
-/* Fallback default root (Dark by default) */
-:root {
-  --bg-color: #242424; 
-  --glass-bg: rgba(60, 60, 60, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
-  --text-primary: #f5f5f7;
-  --text-secondary: #86868b;
-  --bubble-user: rgba(255, 255, 255, 0.08);
-  --bubble-ai: rgba(255, 255, 255, 0.03);
-  --btn-bg: rgba(255, 255, 255, 0.05);
-  --btn-border: rgba(255, 255, 255, 0.08);
-  --btn-hover: rgba(255, 255, 255, 0.12);
-  --send-btn-bg: rgba(255, 255, 255, 0.15);
-  --send-btn-hover: rgba(255, 255, 255, 0.25);
+  --send-btn-bg: rgba(255, 255, 255, 0.8);
+  --send-btn-hover: rgba(255, 255, 255, 1);
+  --send-btn-text: #1d1d1f;
 }
 
 * {
@@ -80,9 +67,55 @@ body {
   z-index: 50;
 }
 
-/* Theme Toggle Button */
-.theme-toggle-btn {
-  /* It inherits from circle-btn but is placed in top bar */
+/* Dropdown styling */
+.theme-dropdown-container {
+  position: relative;
+}
+
+.theme-dropdown-menu {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-border-light);
+  border-radius: 16px;
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  box-shadow: var(--glass-shadow);
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  gap: 4px;
+  min-width: 140px;
+  opacity: 1;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: translateY(0) scale(1);
+}
+
+.theme-dropdown-menu.menu-hidden {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.95);
+  pointer-events: none;
+}
+
+.theme-option {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 14px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.theme-option:hover {
+  background: var(--btn-bg);
+  color: var(--text-primary);
 }
 
 .main-card {
@@ -94,12 +127,13 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-bottom: 120px; /* Visually moves bubble slightly upwards in center mode */
   gap: 32px;
 }
 
 .main-card.chat-mode {
   justify-content: flex-start;
-  padding-bottom: 140px;
+  padding-bottom: 180px; /* Make space for fixed input */
 }
 
 /* Welcome Heading */
@@ -138,10 +172,11 @@ body {
 .glass-input-container {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-border-light);
   border-radius: 20px;
   padding: 12px 16px;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
   box-shadow: var(--glass-shadow);
   display: flex;
   flex-direction: column;
@@ -188,8 +223,8 @@ body.light-theme .glass-input::placeholder {
   background: var(--btn-bg);
   border: 1px solid var(--btn-border);
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 34px;
+  height: 34px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -205,48 +240,47 @@ body.light-theme .glass-input::placeholder {
 
 .send-btn {
   background: var(--send-btn-bg);
-  color: #fff;
-  border: none;
+  color: var(--send-btn-text);
+  border: 1px solid var(--glass-border);
+  border-top: 1px solid var(--glass-border-light);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.2);
+}
+
+body.light-theme .send-btn {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,1);
 }
 
 .send-btn:hover {
   background: var(--send-btn-hover);
 }
 
-body.light-theme .send-btn {
-  color: #fff; /* White icon always for send */
-}
-
 /* Model Select Dropdown */
 .model-select {
-  background: var(--btn-bg);
+  /* Using shorthand to guarantee no multiple arrows are layered */
+  background: var(--btn-bg) url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2386868b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat calc(100% - 12px) center / 12px;
   border: 1px solid var(--btn-border);
-  border-radius: 16px;
-  height: 32px;
+  border-radius: 18px;
+  height: 34px;
   color: var(--text-secondary);
   font-size: 13px;
-  padding: 0 28px 0 12px;
+  padding: 0 32px 0 14px;
   outline: none;
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2386868b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 12px;
   transition: all 0.2s ease;
 }
 
-.model-select:hover {
-  background: var(--btn-hover);
+body.dark-theme .model-select:hover {
+  background: var(--btn-hover) url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat calc(100% - 12px) center / 12px;
   color: var(--text-primary);
 }
 
 body.light-theme .model-select:hover {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d1d1f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-}
-body.dark-theme .model-select:hover {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f5f5f7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background: var(--btn-hover) url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d1d1f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat calc(100% - 12px) center / 12px;
+  color: var(--text-primary);
 }
 
 .model-select option {
