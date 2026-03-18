@@ -374,33 +374,106 @@ body.light-theme .answer-bubble {
 .answer-text p:first-child { margin-top: 0; }
 .answer-text p:last-child { margin-bottom: 0; }
 
-.citations-bubble {
-  margin-top: 12px;
+/* Citations Expansion UI */
+.citations-container {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
 }
 
-.citations-bubble .bubble-title {
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-secondary);
-  font-weight: 500;
-  margin-bottom: 6px;
+.citations-toggle-btn {
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
 }
 
-.citations {
-  display: flex;
-  flex-wrap: wrap;
+.citations-toggle-btn:hover {
+    background: var(--btn-hover);
 }
 
-.citations span {
-  display: inline-block;
-  background-color: var(--bubble-user);
-  border: 1px solid var(--glass-border);
-  border-radius: 6px;
-  padding: 4px 10px;
-  font-size: 12px;
-  margin-right: 8px;
-  margin-bottom: 8px;
-  color: var(--text-secondary);
-  cursor: default;
+.citations-list {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-top: 1px solid var(--glass-border-light);
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 680px;
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.citation-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    background: var(--bubble-user);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.citation-item:hover {
+    background: var(--btn-hover);
+}
+
+.citation-header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.citation-num {
+    background: var(--btn-bg);
+    border: 1px solid var(--btn-border);
+    width: 22px;
+    height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color: var(--text-secondary);
+    font-size: 11px;
+}
+
+.citation-score {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    font-size: 11px;
+}
+
+.citation-text {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.6;
+}
+
+.citation-text.collapsed {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
