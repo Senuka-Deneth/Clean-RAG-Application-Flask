@@ -65,7 +65,7 @@
     <div class="glass-input-wrapper">
       <div class="glass-input-container">
         <!-- Text Input -->
-        <input id="question" type="text" placeholder="Upload a file" class="glass-input" />
+        <textarea id="question" rows="1" placeholder="Upload a file" class="glass-input"></textarea>
         
         <!-- Action Buttons -->
         <div class="glass-actions">
@@ -104,13 +104,27 @@
   
   <!-- Inline logic for dynamic UI updates (leaving main.js strictly untouched) -->
   <script>
-    // 1. Dynamic placeholder based on file upload
+    // 1. Dynamic placeholder based on file upload & Auto-resize
     const fileInputMod = document.getElementById('file');
     const questionInputMod = document.getElementById('question');
     if (fileInputMod && questionInputMod) {
       fileInputMod.addEventListener('change', (e) => {
         const hasFile = e.target.files && e.target.files.length > 0;
         questionInputMod.placeholder = hasFile ? "Ask anything from the document" : "Upload a file";
+      });
+      
+      // Auto-resize logic
+      questionInputMod.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+      });
+      
+      // Submit on Enter (Shift+Enter for new line)
+      questionInputMod.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            document.getElementById('askBtn').click();
+        }
       });
     }
 
